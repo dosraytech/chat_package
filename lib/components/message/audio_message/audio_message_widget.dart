@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 /// Renders an audio message bubble with play/pause, seek bar, and timer.
 class AudioMessageWidget extends StatefulWidget {
@@ -58,7 +58,9 @@ class _AudioMessageWidgetState extends State<AudioMessageWidget> {
   @override
   Widget build(BuildContext context) {
     final isSender = widget.message.isSender;
-    final bubbleColor = widget.senderColor.withOpacity(isSender ? 1 : 0.1);
+    final bubbleColor = widget.senderColor.withValues(
+      alpha: isSender ? 1 : 0.1,
+    );
     final iconColor = isSender ? Colors.white : widget.senderColor;
 
     return Align(

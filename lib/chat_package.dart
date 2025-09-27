@@ -1,13 +1,13 @@
 /// lib/src/presentation/widgets/chat_screen.dart
 library chat_package;
 
-import 'package:flutter/material.dart';
 import 'package:chat_package/components/chat_input_field/chat_input_field.dart';
 import 'package:chat_package/components/chat_input_field/widgets/recording_button.dart';
 import 'package:chat_package/components/chat_input_field/widgets/wave_animation.dart';
 import 'package:chat_package/components/message/message_widget.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
+import 'package:flutter/material.dart';
 
 /// A full-screen chat UI consisting of a message list and an input field.
 ///
@@ -113,6 +113,9 @@ class ChatScreen extends StatelessWidget {
 
     /// Inactive color for the audio slider.
     this.inactiveAudioSliderColor,
+
+    this.textStyle,
+    this.dateTextStyle,
   }) : super(key: key);
 
   /// The list of chat messages to display.
@@ -196,6 +199,12 @@ class ChatScreen extends StatelessWidget {
   /// Inactive color for the audio slider.
   final Color? inactiveAudioSliderColor;
 
+  /// Optional text style applied inside image message containers.
+  final TextStyle? textStyle;
+
+  /// Optional style for the timestamp text.
+  final TextStyle? dateTextStyle;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -218,8 +227,9 @@ class ChatScreen extends StatelessWidget {
                 inactiveAudioSliderColor:
                     inactiveAudioSliderColor ?? kLightColor,
                 message: message,
-                messageContainerTextStyle: null,
-                sendDateTextStyle: null,
+                textDirection: textDirection,
+                messageContainerTextStyle: textStyle,
+                sendDateTextStyle: dateTextStyle,
               );
             },
           ),

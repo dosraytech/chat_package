@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:chat_package/components/message/date_time_widget.dart';
 import 'package:chat_package/components/message/audio_message/audio_message_widget.dart';
+import 'package:chat_package/components/message/date_time_widget.dart';
 import 'package:chat_package/components/message/image_message/image_message_widget.dart';
 import 'package:chat_package/components/message/text_message/text_message_widget.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
+import 'package:flutter/material.dart';
 
 /// A chat bubble that renders text, image, audio (or future video) messages,
 /// along with a timestamp.
@@ -33,6 +33,9 @@ class MessageWidget extends StatelessWidget {
   /// Optional style for the timestamp text.
   final TextStyle? sendDateTextStyle;
 
+  /// Optional text direction
+  final TextDirection? textDirection;
+
   /// Creates a [MessageWidget].
   ///
   /// All color parameters are required to ensure consistent theming.
@@ -44,16 +47,19 @@ class MessageWidget extends StatelessWidget {
     required this.inactiveAudioSliderColor,
     required this.activeAudioSliderColor,
     this.messageContainerTextStyle,
+    this.textDirection,
     this.sendDateTextStyle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bool isSender = message.isSender;
-    final Alignment alignment =
-        isSender ? Alignment.centerRight : Alignment.centerLeft;
-    final CrossAxisAlignment crossAxisAlignment =
-        isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final Alignment alignment = isSender
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+    final CrossAxisAlignment crossAxisAlignment = isSender
+        ? CrossAxisAlignment.end
+        : CrossAxisAlignment.start;
     final Color bubbleColor = isSender ? senderColor : receiverColor;
 
     return Padding(
@@ -86,6 +92,8 @@ class MessageWidget extends StatelessWidget {
       return TextMessageWidget(
         message: message,
         senderColor: bubbleColor,
+        style: messageContainerTextStyle,
+        textDirection: textDirection,
       );
     }
 

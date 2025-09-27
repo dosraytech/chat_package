@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 class TextMessageWidget extends StatelessWidget {
   final ChatMessage message;
   final Color senderColor;
+  final TextStyle? style;
+  final TextDirection? textDirection;
 
   const TextMessageWidget({
     Key? key,
+    this.style,
+    this.textDirection,
     required this.message,
     required this.senderColor,
   }) : super(key: key);
@@ -16,8 +20,8 @@ class TextMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSender = message.isSender;
-    final maxBubbleWidth = MediaQuery.of(context).size.width * 0.5;
-    final backgroundColor = senderColor.withOpacity(isSender ? 1 : 0.1);
+    final maxBubbleWidth = MediaQuery.of(context).size.width * 0.75;
+    final backgroundColor = senderColor.withValues(alpha: isSender ? 1 : 0.1);
     final textColor = isSender
         ? Colors.white
         : Theme.of(context).textTheme.bodyMedium!.color!;
@@ -26,10 +30,7 @@ class TextMessageWidget extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: maxBubbleWidth,
-          minWidth: 50,
-        ),
+        constraints: BoxConstraints(maxWidth: maxBubbleWidth, minWidth: 50),
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: kDefaultPadding * 0.75,
@@ -41,11 +42,12 @@ class TextMessageWidget extends StatelessWidget {
           ),
           child: Text(
             message.text,
-            textDirection: TextDirection.rtl,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: textColor),
+            textDirection: textDirection ?? TextDirection.ltr,
+            style:
+                style ??
+                Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(color: textColor),
           ),
         ),
       ),

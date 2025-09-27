@@ -8,10 +8,8 @@ import 'package:photo_view/photo_view.dart';
 class PhotoGalleryView extends StatefulWidget {
   final ChatMessage chatMessage;
 
-  const PhotoGalleryView({
-    Key? key,
-    required this.chatMessage,
-  }) : super(key: key);
+  const PhotoGalleryView({Key? key, required this.chatMessage})
+    : super(key: key);
   @override
   _PhotoGalleryViewState createState() => _PhotoGalleryViewState();
 }
@@ -34,13 +32,11 @@ class _PhotoGalleryViewState extends State<PhotoGalleryView> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.9),
+      backgroundColor: Colors.black.withValues(alpha: 0.9),
       body: Stack(
         children: [
           PhotoView(
-            heroAttributes: PhotoViewHeroAttributes(
-              tag: 'photo_gallery_hero',
-            ),
+            heroAttributes: PhotoViewHeroAttributes(tag: 'photo_gallery_hero'),
             loadingBuilder: (context, event) => Center(
               child: Container(
                 width: 20.0,
@@ -64,12 +60,9 @@ class _PhotoGalleryViewState extends State<PhotoGalleryView> {
               child: Container(
                 /// icon to cancel and return to the previous view
                 child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 30,
-                    )),
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.close, color: Colors.white, size: 30),
+                ),
               ),
             ),
           ),
