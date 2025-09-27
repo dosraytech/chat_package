@@ -28,7 +28,10 @@ class MessageWidget extends StatelessWidget {
   final Color activeAudioSliderColor;
 
   /// Optional text style applied inside image message containers.
-  final TextStyle? messageContainerTextStyle;
+  final TextStyle? senderTextStyle;
+
+  /// Optional text style applied inside image message containers.
+  final TextStyle? receiverTextStyle;
 
   /// Optional style for the timestamp text.
   final TextStyle? sendDateTextStyle;
@@ -46,7 +49,8 @@ class MessageWidget extends StatelessWidget {
     required this.receiverColor,
     required this.inactiveAudioSliderColor,
     required this.activeAudioSliderColor,
-    this.messageContainerTextStyle,
+    this.senderTextStyle,
+    this.receiverTextStyle,
     this.textDirection,
     this.sendDateTextStyle,
   }) : super(key: key);
@@ -69,7 +73,7 @@ class MessageWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: crossAxisAlignment,
           children: [
-            _buildContent(bubbleColor),
+            _buildContent(bubbleColor, isSender),
             const SizedBox(height: 3),
             DateTimeWidget(
               message: message,
@@ -87,12 +91,12 @@ class MessageWidget extends StatelessWidget {
   /// - Image messages use [ImageMessageWidget].
   /// - Audio messages use [AudioMessageWidget].
   /// - Video messages are not yet implemented.
-  Widget _buildContent(Color bubbleColor) {
+  Widget _buildContent(Color bubbleColor, bool isSender) {
     if (message.chatMedia == null) {
       return TextMessageWidget(
         message: message,
         senderColor: bubbleColor,
-        style: messageContainerTextStyle,
+        style: isSender ? senderTextStyle : receiverTextStyle,
         textDirection: textDirection,
       );
     }
@@ -101,7 +105,9 @@ class MessageWidget extends StatelessWidget {
       imageMediaType: () => ImageMessageWidget(
         message: message,
         senderColor: bubbleColor,
-        messageContainerTextStyle: messageContainerTextStyle,
+        messageContainerTextStyle: isSender
+            ? senderTextStyle
+            : receiverTextStyle,
       ),
       audioMediaType: () => AudioMessageWidget(
         message: message,

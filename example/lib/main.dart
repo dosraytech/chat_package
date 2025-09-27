@@ -37,14 +37,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   final messages = [
-    ChatMessage(
-      text: 'hi omar',
-      isSender: true,
-    ),
-    ChatMessage(
-      text: 'hello',
-      isSender: false,
-    ),
+    ChatMessage(text: 'hi omar', isSender: true),
+    ChatMessage(text: 'hello', isSender: false),
     ChatMessage(
       isSender: true,
       text: 'this is a banana',
@@ -58,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -66,6 +61,8 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: ChatScreen(
         messages: messages,
+        senderTextStyle: textTheme.bodyMedium?.copyWith(color: Colors.white),
+        receiverTextStyle: textTheme.bodyMedium,
         scrollController: ScrollController(),
         onRecordComplete: (audioMessage) {
           messages.add(audioMessage);

@@ -114,7 +114,8 @@ class ChatScreen extends StatelessWidget {
     /// Inactive color for the audio slider.
     this.inactiveAudioSliderColor,
 
-    this.textStyle,
+    this.senderTextStyle,
+    this.receiverTextStyle,
     this.dateTextStyle,
   }) : super(key: key);
 
@@ -200,7 +201,10 @@ class ChatScreen extends StatelessWidget {
   final Color? inactiveAudioSliderColor;
 
   /// Optional text style applied inside image message containers.
-  final TextStyle? textStyle;
+  final TextStyle? senderTextStyle;
+
+  /// Optional text style applied inside image message containers.
+  final TextStyle? receiverTextStyle;
 
   /// Optional style for the timestamp text.
   final TextStyle? dateTextStyle;
@@ -228,7 +232,8 @@ class ChatScreen extends StatelessWidget {
                     inactiveAudioSliderColor ?? kLightColor,
                 message: message,
                 textDirection: textDirection,
-                messageContainerTextStyle: textStyle,
+                senderTextStyle: senderTextStyle,
+                receiverTextStyle: receiverTextStyle,
                 sendDateTextStyle: dateTextStyle,
               );
             },
