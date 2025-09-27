@@ -108,21 +108,23 @@ class ChatInputField extends StatefulWidget {
     InputDecoration? textFieldDecoration,
     WaveAnimationStyle? waveStyle,
     RecordingButtonStyle? buttonStyle,
-  })  : waveDuration = waveDuration ?? const Duration(milliseconds: 600),
-        chatFieldPadding =
-            chatFieldPadding ?? const EdgeInsets.symmetric(vertical: 6),
-        chatFieldMargin =
-            chatFieldMargin ?? const EdgeInsets.symmetric(horizontal: 6),
-        decoration = decoration ??
-            BoxDecoration(
-                color: Colors.black12, borderRadius: BorderRadius.circular(26)),
-        textFieldDecoration = textFieldDecoration ??
-            const InputDecoration.collapsed(
-              hintText: 'Type a message',
-            ),
-        waveStyle = waveStyle ?? const WaveAnimationStyle(),
-        buttonStyle = buttonStyle ?? const RecordingButtonStyle(),
-        super(key: key);
+  }) : waveDuration = waveDuration ?? const Duration(milliseconds: 600),
+       chatFieldPadding =
+           chatFieldPadding ?? const EdgeInsets.symmetric(vertical: 6),
+       chatFieldMargin =
+           chatFieldMargin ?? const EdgeInsets.symmetric(horizontal: 6),
+       decoration =
+           decoration ??
+           BoxDecoration(
+             color: Colors.black12,
+             borderRadius: BorderRadius.circular(26),
+           ),
+       textFieldDecoration =
+           textFieldDecoration ??
+           const InputDecoration.collapsed(hintText: 'Type a message'),
+       waveStyle = waveStyle ?? const WaveAnimationStyle(),
+       buttonStyle = buttonStyle ?? const RecordingButtonStyle(),
+       super(key: key);
 
   @override
   _ChatInputFieldState createState() => _ChatInputFieldState();
@@ -169,9 +171,9 @@ class _ChatInputFieldState extends State<ChatInputField>
             child: Row(
               children: [
                 AnimatedPadding(
-                    padding:
-                        EdgeInsets.only(left: provider.isRecording ? 12 : 4),
-                    duration: const Duration(milliseconds: 100)),
+                  padding: EdgeInsets.only(left: provider.isRecording ? 12 : 4),
+                  duration: const Duration(milliseconds: 100),
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: AnimatedSwitcher(
@@ -180,9 +182,7 @@ class _ChatInputFieldState extends State<ChatInputField>
                         ? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                Icons.delete,
-                              ),
+                              Icon(Icons.delete),
                               if (widget.showWaveAnimation)
                                 Expanded(
                                   child: WaveAnimation(
@@ -191,16 +191,10 @@ class _ChatInputFieldState extends State<ChatInputField>
                                   ),
                                 ),
                               Flexible(
-                                child: Text(
-                                  widget.recordingNoteHintText,
-                                  // style: widget.waveStyle.timerTextStyle,
-                                ),
+                                child: Text(widget.recordingNoteHintText),
                               ),
                               SizedBox(width: 2),
-                              Text(
-                                '${minutes}:${seconds}',
-                                // style: widget.waveStyle.timerTextStyle,
-                              ),
+                              Text('${minutes}:${seconds}'),
                               const SizedBox(width: 12),
                             ],
                           )
@@ -228,13 +222,14 @@ class _ChatInputFieldState extends State<ChatInputField>
                                             widget.chatBottomSheetTextStyle,
                                         onCameraTap: () {
                                           Navigator.pop(context);
-
                                           provider.pickImage(
-                                              ImageSourceType.camera);
+                                            ImageSourceType.camera,
+                                          );
                                         },
                                         onGalleryTap: () {
                                           provider.pickImage(
-                                              ImageSourceType.gallery);
+                                            ImageSourceType.gallery,
+                                          );
                                         },
                                       );
                                     },
@@ -257,13 +252,14 @@ class _ChatInputFieldState extends State<ChatInputField>
                   ),
                 ),
                 SizedBox(
-                    width:
-                        provider.isRecording ? (20 - provider.dragOffset) : 5),
+                  width: provider.isRecording ? (20 - provider.dragOffset) : 5,
+                ),
                 RecordingButton(
                   dragOffset: provider.dragOffset,
                   onLongPressStart: (_) => provider.startRecording(),
-                  onLongPressMoveUpdate: (details) =>
-                      provider.onMove(details.offsetFromOrigin),
+                  onLongPressMoveUpdate: (details) {
+                    provider.onMove(details.offsetFromOrigin);
+                  },
                   onLongPressEnd: (_) => provider.endRecording(),
                   onTap: provider.sendTextMessage,
                   hasText: provider.hasText,

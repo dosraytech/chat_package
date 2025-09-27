@@ -5,6 +5,7 @@ import 'package:chat_package/components/message/text_message/text_message_widget
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:voice_message_package/voice_message_package.dart';
 
 /// A chat bubble that renders text, image, audio (or future video) messages,
 /// along with a timestamp.
@@ -39,6 +40,9 @@ class MessageWidget extends StatelessWidget {
   /// Optional text direction
   final TextDirection? textDirection;
 
+  /// Optional voice source type [url, file]
+  final bool? isAudioFile;
+
   /// Creates a [MessageWidget].
   ///
   /// All color parameters are required to ensure consistent theming.
@@ -53,6 +57,7 @@ class MessageWidget extends StatelessWidget {
     this.receiverTextStyle,
     this.textDirection,
     this.sendDateTextStyle,
+    this.isAudioFile,
   }) : super(key: key);
 
   @override
@@ -109,11 +114,27 @@ class MessageWidget extends StatelessWidget {
             ? senderTextStyle
             : receiverTextStyle,
       ),
-      audioMediaType: () => AudioMessageWidget(
+      /*audioMediaType: () => AudioMessageWidget(
         message: message,
         senderColor: bubbleColor,
         inactiveAudioSliderColor: inactiveAudioSliderColor,
         activeAudioSliderColor: activeAudioSliderColor,
+      ),*/
+      audioMediaType: () => VoiceMessageView(
+        circlesColor: bubbleColor,
+        activeSliderColor: bubbleColor,
+        controller: VoiceController(
+          audioSrc: message.chatMedia!.url,
+          onComplete: () {},
+          onPause: () {},
+          onPlaying: () {},
+          onError: (err) {},
+          maxDuration: const Duration(seconds: 10),
+          // isFile: isAudioFile ?? true,
+          isFile: message.chatMedia!.url.startsWith('http') ? false : true,
+        ),
+        innerPadding: 12,
+        cornerRadius: 20,
       ),
       videoMediaType: () {
         // TODO: Replace with VideoMessageWidget when available

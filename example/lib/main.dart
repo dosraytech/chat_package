@@ -61,8 +61,13 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: ChatScreen(
         messages: messages,
+        isAudioFile: true,
         senderTextStyle: textTheme.bodyMedium?.copyWith(color: Colors.white),
         receiverTextStyle: textTheme.bodyMedium,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(50),
+        ),
         scrollController: ScrollController(),
         onRecordComplete: (audioMessage) {
           messages.add(audioMessage);

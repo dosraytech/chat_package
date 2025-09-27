@@ -114,9 +114,12 @@ class ChatScreen extends StatelessWidget {
     /// Inactive color for the audio slider.
     this.inactiveAudioSliderColor,
 
+    /// Added more
+    this.decoration,
     this.senderTextStyle,
     this.receiverTextStyle,
     this.dateTextStyle,
+    this.isAudioFile,
   }) : super(key: key);
 
   /// The list of chat messages to display.
@@ -167,6 +170,9 @@ class ChatScreen extends StatelessWidget {
   /// Decoration for the text input field.
   final InputDecoration? textFieldDecoration;
 
+  /// Decoration for the text input field.
+  final Decoration? decoration;
+
   /// Padding around the chat field.
   final EdgeInsetsGeometry? chatFieldPadding;
 
@@ -209,6 +215,9 @@ class ChatScreen extends StatelessWidget {
   /// Optional style for the timestamp text.
   final TextStyle? dateTextStyle;
 
+  /// Optional voice source type [url, file]
+  final bool? isAudioFile;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -224,6 +233,7 @@ class ChatScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final message = messages[index];
               return MessageWidget(
+                isAudioFile: isAudioFile,
                 receiverColor: receiverColor ?? kSecondaryColor,
                 senderColor: senderColor ?? kPrimaryColor,
                 activeAudioSliderColor:
@@ -261,6 +271,7 @@ class ChatScreen extends StatelessWidget {
           waveStyle: waveStyle,
           buttonStyle: buttonStyle,
           textDirection: textDirection,
+          decoration: decoration,
         ),
       ],
     );
