@@ -121,15 +121,19 @@ class MessageWidget extends StatelessWidget {
         activeAudioSliderColor: activeAudioSliderColor,
       ),*/
       audioMediaType: () => VoiceMessageView(
-        circlesColor: bubbleColor,
-        activeSliderColor: bubbleColor,
+        circlesColor: isSender ? Colors.white : bubbleColor,
+        activeSliderColor: isSender ? Colors.white : bubbleColor,
+        backgroundColor: isSender ? bubbleColor : Colors.white,
+        playIcon: Icon(Icons.play_arrow),
+        counterTextStyle: TextStyle(color: Colors.white),
+        circlesTextStyle: TextStyle(color: bubbleColor, fontSize: 10),
         controller: VoiceController(
           audioSrc: message.chatMedia!.url,
           onComplete: () {},
           onPause: () {},
           onPlaying: () {},
           onError: (err) {},
-          maxDuration: const Duration(seconds: 10),
+          maxDuration: const Duration(seconds: 60),
           // isFile: isAudioFile ?? true,
           isFile: message.chatMedia!.url.startsWith('http') ? false : true,
         ),

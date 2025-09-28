@@ -151,124 +151,141 @@ class _ChatInputFieldState extends State<ChatInputField>
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ChatInputProvider>(
-      create: (_) => ChatInputProvider(
-        onImageSelected: widget.onImageSelected,
-        onTextSubmit: widget.onTextSubmit,
-        onRecordComplete: widget.onRecordComplete,
-        textController: widget.textController,
-        cancelThreshold: widget.cancelThreshold,
-      ),
-      child: Consumer<ChatInputProvider>(
-        builder: (context, provider, _) {
-          final d = provider.recordDuration;
-          final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
-          final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
-          return Container(
-            padding: widget.chatFieldPadding,
-            margin: widget.chatFieldMargin,
-            decoration: widget.decoration,
-            child: Row(
-              children: [
-                AnimatedPadding(
-                  padding: EdgeInsets.only(left: provider.isRecording ? 12 : 4),
-                  duration: const Duration(milliseconds: 100),
-                ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: provider.isRecording
-                        ? Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.delete),
-                              if (widget.showWaveAnimation)
+    return SafeArea(
+      top: false,
+      child: ChangeNotifierProvider<ChatInputProvider>(
+        create: (_) => ChatInputProvider(
+          onImageSelected: widget.onImageSelected,
+          onTextSubmit: widget.onTextSubmit,
+          onRecordComplete: widget.onRecordComplete,
+          textController: widget.textController,
+          cancelThreshold: widget.cancelThreshold,
+        ),
+        child: Consumer<ChatInputProvider>(
+          builder: (context, provider, _) {
+            final d = provider.recordDuration;
+            final minutes = d.inMinutes
+                .remainder(60)
+                .toString()
+                .padLeft(2, '0');
+            final seconds = d.inSeconds
+                .remainder(60)
+                .toString()
+                .padLeft(2, '0');
+            return Container(
+              padding: widget.chatFieldPadding,
+              margin: widget.chatFieldMargin,
+              decoration: widget.decoration,
+              height: 55,
+              child: Row(
+                children: [
+                  AnimatedPadding(
+                    padding: EdgeInsets.only(
+                      left: provider.isRecording ? 12 : 4,
+                    ),
+                    duration: const Duration(milliseconds: 100),
+                  ),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: provider.isRecording
+                          ? Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.delete),
+                                if (widget.showWaveAnimation)
+                                  Expanded(
+                                    child: WaveAnimation(
+                                      controller: _waveController,
+                                      style: widget.waveStyle,
+                                    ),
+                                  ),
+                                Flexible(
+                                  child: Text(widget.recordingNoteHintText),
+                                ),
+                                SizedBox(width: 2),
+                                Text('${minutes}:${seconds}'),
+                                const SizedBox(width: 12),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet<void>(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
+                                      ),
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return ChatBottomSheet(
+                                          cameraText: widget.cameraText,
+                                          galleryText: widget.galleryText,
+                                          cancelText: widget.cancelText,
+                                          cameraIcon: widget.cameraIcon,
+                                          galleryIcon: widget.galleryIcon,
+                                          cancelIcon: widget.cancelIcon,
+                                          textStyle:
+                                              widget.chatBottomSheetTextStyle,
+                                          onCameraTap: () {
+                                            Navigator.pop(context);
+                                            provider.pickImage(
+                                              ImageSourceType.camera,
+                                            );
+                                          },
+                                          onGalleryTap: () {
+                                            provider.pickImage(
+                                              ImageSourceType.gallery,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(Icons.add),
+                                ),
                                 Expanded(
-                                  child: WaveAnimation(
-                                    controller: _waveController,
-                                    style: widget.waveStyle,
+                                  child: TextField(
+                                    enabled: widget.enableInput,
+                                    controller: widget.textController,
+                                    decoration: widget.textFieldDecoration,
+                                    textDirection: widget.textDirection,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                   ),
                                 ),
-                              Flexible(
-                                child: Text(widget.recordingNoteHintText),
-                              ),
-                              SizedBox(width: 2),
-                              Text('${minutes}:${seconds}'),
-                              const SizedBox(width: 12),
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  showModalBottomSheet<void>(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10),
-                                      ),
-                                    ),
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return ChatBottomSheet(
-                                        cameraText: widget.cameraText,
-                                        galleryText: widget.galleryText,
-                                        cancelText: widget.cancelText,
-                                        cameraIcon: widget.cameraIcon,
-                                        galleryIcon: widget.galleryIcon,
-                                        cancelIcon: widget.cancelIcon,
-                                        textStyle:
-                                            widget.chatBottomSheetTextStyle,
-                                        onCameraTap: () {
-                                          Navigator.pop(context);
-                                          provider.pickImage(
-                                            ImageSourceType.camera,
-                                          );
-                                        },
-                                        onGalleryTap: () {
-                                          provider.pickImage(
-                                            ImageSourceType.gallery,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                                icon: Icon(Icons.add),
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  enabled: widget.enableInput,
-                                  controller: widget.textController,
-                                  decoration: widget.textFieldDecoration,
-                                  textDirection: widget.textDirection,
-                                  textCapitalization:
-                                      TextCapitalization.sentences,
-                                ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: provider.isRecording ? (20 - provider.dragOffset) : 5,
-                ),
-                RecordingButton(
-                  dragOffset: provider.dragOffset,
-                  onLongPressStart: (_) => provider.startRecording(),
-                  onLongPressMoveUpdate: (details) {
-                    provider.onMove(details.offsetFromOrigin);
-                  },
-                  onLongPressEnd: (_) => provider.endRecording(),
-                  onTap: provider.sendTextMessage,
-                  hasText: provider.hasText,
-                  style: widget.buttonStyle,
-                ),
-              ],
-            ),
-          );
-        },
+                  SizedBox(
+                    width: provider.isRecording
+                        ? (20 - provider.dragOffset)
+                        : 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: RecordingButton(
+                      dragOffset: provider.dragOffset,
+                      onLongPressStart: (_) => provider.startRecording(),
+                      onLongPressMoveUpdate: (details) {
+                        provider.onMove(details.offsetFromOrigin);
+                      },
+                      onLongPressEnd: (_) => provider.endRecording(),
+                      onTap: provider.sendTextMessage,
+                      hasText: provider.hasText,
+                      style: widget.buttonStyle,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
