@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/models/media/chat_media.dart';
 import 'package:chat_package/models/media/media_type.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
 
 /// Defines the source for picking images: camera or gallery.
 enum ImageSourceType { camera, gallery }
@@ -94,10 +93,7 @@ class ChatInputProvider extends ChangeNotifier {
       await _audioRecorder.stop();
     }
 
-    await _audioRecorder.start(
-      const RecordConfig(),
-      path: filePath,
-    );
+    await _audioRecorder.start(const RecordConfig(), path: filePath);
     if (_recordTimer == null) {
       _recordTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         _recordDuration += const Duration(seconds: 1);
@@ -165,10 +161,7 @@ class ChatInputProvider extends ChangeNotifier {
   /// Sends the current text message if non-empty, then clears the input.
   void sendTextMessage() {
     if (!hasText) return;
-    final message = ChatMessage(
-      text: textController.text,
-      isSender: true,
-    );
+    final message = ChatMessage(text: textController.text, isSender: true);
     onTextSubmit(message);
 
     textController.clear();

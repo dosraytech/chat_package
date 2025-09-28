@@ -124,9 +124,14 @@ class MessageWidget extends StatelessWidget {
         circlesColor: isSender ? Colors.white : bubbleColor,
         activeSliderColor: isSender ? Colors.white : bubbleColor,
         backgroundColor: isSender ? bubbleColor : Colors.white,
-        playIcon: Icon(Icons.play_arrow),
+        playIcon: Icon(Icons.play_arrow, color: bubbleColor),
+        pauseIcon: Icon(Icons.pause, color: bubbleColor),
         counterTextStyle: TextStyle(color: Colors.white),
-        circlesTextStyle: TextStyle(color: bubbleColor, fontSize: 10),
+        circlesTextStyle: TextStyle(
+          color: bubbleColor,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+        ),
         controller: VoiceController(
           audioSrc: message.chatMedia!.url,
           onComplete: () {},
