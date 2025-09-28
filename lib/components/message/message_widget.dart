@@ -121,14 +121,22 @@ class MessageWidget extends StatelessWidget {
         activeAudioSliderColor: activeAudioSliderColor,
       ),*/
       audioMediaType: () => VoiceMessageView(
-        circlesColor: isSender ? Colors.white : bubbleColor,
+        circlesColor: isSender ? Colors.white : senderColor,
         activeSliderColor: isSender ? Colors.white : bubbleColor,
-        backgroundColor: isSender ? bubbleColor : Colors.white,
-        playIcon: Icon(Icons.play_arrow, color: bubbleColor),
-        pauseIcon: Icon(Icons.pause, color: bubbleColor),
-        counterTextStyle: TextStyle(color: Colors.white),
+        backgroundColor: isSender ? bubbleColor : Colors.grey.shade100,
+        playIcon: Icon(
+          Icons.play_arrow,
+          color: isSender ? bubbleColor : Colors.white,
+        ),
+        pauseIcon: Icon(
+          Icons.pause,
+          color: isSender ? bubbleColor : Colors.white,
+        ),
+        counterTextStyle: TextStyle(
+          color: isSender ? Colors.white : Colors.grey,
+        ),
         circlesTextStyle: TextStyle(
-          color: bubbleColor,
+          color: isSender ? bubbleColor : Colors.white,
           fontSize: 10,
           fontWeight: FontWeight.w700,
         ),

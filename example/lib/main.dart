@@ -48,6 +48,24 @@ class _ChatPageState extends State<ChatPage> {
         mediaType: MediaType.imageMediaType(),
       ),
     ),
+    ChatMessage(
+      text: '',
+      isSender: false,
+      chatMedia: const ChatMedia(
+        url:
+            'https://okapps.reankhode.com/api/files/eh6j8pzx78rq5bn/oc0baugmfl7ml4b/1759026640980_d4n3s6lvsf.m4a',
+        mediaType: MediaType.audioMediaType(),
+      ),
+    ),
+    ChatMessage(
+      text: '',
+      isSender: true,
+      chatMedia: const ChatMedia(
+        url:
+            'https://okapps.reankhode.com/api/files/eh6j8pzx78rq5bn/oc0baugmfl7ml4b/1759026640980_d4n3s6lvsf.m4a',
+        mediaType: MediaType.audioMediaType(),
+      ),
+    ),
   ];
 
   @override
@@ -64,6 +82,8 @@ class _ChatPageState extends State<ChatPage> {
         isAudioFile: true,
         senderTextStyle: textTheme.bodyMedium?.copyWith(color: Colors.white),
         receiverTextStyle: textTheme.bodyMedium,
+        receiverColor: Colors.grey,
+        senderColor: Colors.green,
         decoration: BoxDecoration(
           color: Colors.grey.shade200,
           borderRadius: BorderRadius.circular(50),
