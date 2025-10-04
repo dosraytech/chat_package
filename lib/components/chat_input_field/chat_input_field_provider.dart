@@ -183,7 +183,7 @@ class ChatInputProvider extends ChangeNotifier {
   Future<void> pickImage(ImageSourceType sourceType) async {
     final permission = sourceType == ImageSourceType.camera
         ? Permission.camera
-        : Permission.photos;
+        : Permission.mediaLibrary;
     if (!await _requestPermission(permission)) {
       return;
     }

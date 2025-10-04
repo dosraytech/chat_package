@@ -247,12 +247,13 @@ class _ChatInputFieldState extends State<ChatInputField>
                                           textStyle:
                                               widget.chatBottomSheetTextStyle,
                                           onCameraTap: () {
-                                            Navigator.pop(context);
+                                            Navigator.of(context).pop();
                                             provider.pickImage(
                                               ImageSourceType.camera,
                                             );
                                           },
                                           onGalleryTap: () {
+                                            Navigator.of(context).pop();
                                             provider.pickImage(
                                               ImageSourceType.gallery,
                                             );

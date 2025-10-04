@@ -76,7 +76,7 @@ class ChatBottomSheet extends StatelessWidget {
             context: context,
             icon: cancelIcon ?? const Icon(Icons.close),
             label: cancelText,
-            onTap: () => Navigator.of(context).pop,
+            onTap: () => Navigator.of(context).pop(),
           ),
         ],
       ),
