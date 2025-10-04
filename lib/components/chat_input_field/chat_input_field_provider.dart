@@ -132,6 +132,13 @@ class ChatInputProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetRecord() {
+    if (!_isRecording || hasText) return;
+    _resetRecordingState();
+    _recordDuration = Duration.zero;
+    notifyListeners();
+  }
+
   /// Ends recording on long-press release; completes or cancels accordingly.
   Future<void> endRecording() async {
     if (!_isRecording) return;

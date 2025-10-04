@@ -163,6 +163,16 @@ class _ChatInputFieldState extends State<ChatInputField>
         ),
         child: Consumer<ChatInputProvider>(
           builder: (context, provider, _) {
+            void handleButtonPress() {
+              if (provider.hasText) {
+                provider.sendTextMessage();
+              } else if (provider.isRecording) {
+                provider.endRecording(); // Stops and sends the recording
+              } else {
+                provider.startRecording();
+              }
+            }
+
             final d = provider.recordDuration;
             final minutes = d.inMinutes
                 .remainder(60)
@@ -193,7 +203,12 @@ class _ChatInputFieldState extends State<ChatInputField>
                           ? Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.delete),
+                                IconButton(
+                                  onPressed: () {
+                                    provider.resetRecord();
+                                  },
+                                  icon: Icon(Icons.delete),
+                                ),
                                 if (widget.showWaveAnimation)
                                   Expanded(
                                     child: WaveAnimation(
@@ -276,7 +291,9 @@ class _ChatInputFieldState extends State<ChatInputField>
                         provider.onMove(details.offsetFromOrigin);
                       },
                       onLongPressEnd: (_) => provider.endRecording(),
-                      onTap: provider.sendTextMessage,
+                      // onTap: provider.sendTextMessage,
+                      isRecording: provider.isRecording,
+                      onTap: handleButtonPress,
                       hasText: provider.hasText,
                       style: widget.buttonStyle,
                     ),

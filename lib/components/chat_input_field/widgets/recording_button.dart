@@ -29,6 +29,9 @@ class RecordingButtonStyle {
   /// Animation curve for the icon switch.
   final Curve switchCurve;
 
+  /// Icon to show when recording.
+  final IconData stopIcon;
+
   const RecordingButtonStyle({
     this.buttonColor = const Color(0xFF075E54),
     this.iconColor = Colors.white,
@@ -36,6 +39,7 @@ class RecordingButtonStyle {
     this.padding = const EdgeInsets.all(12),
     this.sendIcon = Icons.send,
     this.micIcon = Icons.mic,
+    this.stopIcon = Icons.stop,
     this.decoration,
     this.switchDuration = const Duration(milliseconds: 200),
     this.switchCurve = Curves.easeInOut,
@@ -70,6 +74,9 @@ class RecordingButton extends StatelessWidget {
   /// Styling parameters.
   final RecordingButtonStyle style;
 
+  /// Whether the recorder is active (shows stop icon).
+  final bool isRecording;
+
   const RecordingButton({
     Key? key,
     required this.dragOffset,
@@ -78,34 +85,37 @@ class RecordingButton extends StatelessWidget {
     this.onLongPressEnd,
     required this.onTap,
     required this.hasText,
+    required this.isRecording,
     this.style = const RecordingButtonStyle(),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final deco = style.decoration ??
+    final deco =
+        style.decoration ??
         BoxDecoration(color: style.buttonColor, shape: BoxShape.circle);
 
-    return Transform.translate(
-      offset: Offset(dragOffset, 0),
-      child: GestureDetector(
-        onLongPressStart: onLongPressStart,
-        onLongPressMoveUpdate: onLongPressMoveUpdate,
-        onLongPressEnd: onLongPressEnd,
-        onTap: onTap,
-        child: AnimatedSwitcher(
-          duration: style.switchDuration,
-          switchInCurve: style.switchCurve,
-          switchOutCurve: style.switchCurve,
-          child: Container(
-            key: ValueKey<bool>(hasText),
-            decoration: deco,
-            padding: style.padding,
-            child: Icon(
-              hasText ? style.sendIcon : style.micIcon,
-              color: style.iconColor,
-              size: style.iconSize,
-            ),
+    // Determine which icon to show based on state
+    final IconData currentIcon = hasText
+        ? style.sendIcon
+        : (isRecording ? style.stopIcon : style.micIcon);
+
+    // The GestureDetector is now much simpler
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedSwitcher(
+        duration: style.switchDuration,
+        switchInCurve: style.switchCurve,
+        switchOutCurve: style.switchCurve,
+        child: Container(
+          // Use the icon as the key to ensure the animation triggers
+          key: ValueKey<IconData>(currentIcon),
+          decoration: deco,
+          padding: style.padding,
+          child: Icon(
+            currentIcon,
+            color: style.iconColor,
+            size: style.iconSize,
           ),
         ),
       ),
