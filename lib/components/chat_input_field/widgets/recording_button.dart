@@ -39,7 +39,7 @@ class RecordingButtonStyle {
     this.padding = const EdgeInsets.all(12),
     this.sendIcon = Icons.send,
     this.micIcon = Icons.mic,
-    this.stopIcon = Icons.stop,
+    this.stopIcon = Icons.send,
     this.decoration,
     this.switchDuration = const Duration(milliseconds: 200),
     this.switchCurve = Curves.easeInOut,
