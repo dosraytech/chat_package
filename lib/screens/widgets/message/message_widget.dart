@@ -1,11 +1,12 @@
-import 'package:chat_package/components/message/audio_message/audio_message_widget.dart';
-import 'package:chat_package/components/message/date_time_widget.dart';
-import 'package:chat_package/components/message/image_message/image_message_widget.dart';
-import 'package:chat_package/components/message/text_message/text_message_widget.dart';
+import 'package:chat_package/controllers/voice_controller.dart';
+import 'package:chat_package/screens/voice_message_view.dart';
+import 'package:chat_package/screens/widgets/message/audio_message/audio_message_widget.dart';
+import 'package:chat_package/screens/widgets/message/date_time_widget.dart';
+import 'package:chat_package/screens/widgets/message/image_message/image_message_widget.dart';
+import 'package:chat_package/screens/widgets/message/text_message/text_message_widget.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:voice_message_package/voice_message_package.dart';
 
 /// A chat bubble that renders text, image, audio (or future video) messages,
 /// along with a timestamp.

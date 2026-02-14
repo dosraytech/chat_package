@@ -1,10 +1,10 @@
 /// lib/src/presentation/widgets/chat_screen.dart
 library chat_package;
 
-import 'package:chat_package/components/chat_input_field/chat_input_field.dart';
-import 'package:chat_package/components/chat_input_field/widgets/recording_button.dart';
-import 'package:chat_package/components/chat_input_field/widgets/wave_animation.dart';
-import 'package:chat_package/components/message/message_widget.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/chat_input_field.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/widgets/recording_button.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/widgets/wave_animation.dart';
+import 'package:chat_package/screens/widgets/message/message_widget.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/utils/constants.dart';
 import 'package:flutter/material.dart';

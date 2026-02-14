@@ -2,6 +2,7 @@ import 'package:chat_package/chat_package.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:chat_package/models/media/chat_media.dart';
 import 'package:chat_package/models/media/media_type.dart';
+import 'package:example/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -30,21 +31,17 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final textEditingController = TextEditingController();
-  @override
-  void dispose() {
-    textEditingController.dispose();
-    super.dispose();
-  }
+
+
 
   final messages = [
-    ChatMessage(text: 'hi omar', isSender: true),
-    ChatMessage(text: 'hello', isSender: false),
+    ChatMessage(text: 'Good Morning!', isSender: true),
+    ChatMessage(text: 'Hello, How are you?', isSender: false),
     ChatMessage(
       isSender: true,
-      text: 'this is a banana',
-      chatMedia: const ChatMedia(
-        url:
-            'https://images.pexels.com/photos/7194915/pexels-photo-7194915.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+      text: 'This is you cat.',
+      chatMedia:  ChatMedia(
+        url: AppConstants.image,
         mediaType: MediaType.imageMediaType(),
       ),
     ),
@@ -52,8 +49,7 @@ class _ChatPageState extends State<ChatPage> {
       text: '',
       isSender: false,
       chatMedia: const ChatMedia(
-        url:
-            'https://okapps.reankhode.com/api/files/eh6j8pzx78rq5bn/oc0baugmfl7ml4b/1759026640980_d4n3s6lvsf.m4a',
+        url: AppConstants.voice,
         mediaType: MediaType.audioMediaType(),
       ),
     ),
@@ -61,12 +57,17 @@ class _ChatPageState extends State<ChatPage> {
       text: '',
       isSender: true,
       chatMedia: const ChatMedia(
-        url:
-            'https://okapps.reankhode.com/api/files/eh6j8pzx78rq5bn/oc0baugmfl7ml4b/1759026640980_d4n3s6lvsf.m4a',
+        url: AppConstants.voice,
         mediaType: MediaType.audioMediaType(),
       ),
     ),
   ];
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +75,8 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('Chat'),
-        backgroundColor: const Color(0xFF075E54),
+        title: const Text('Chat Example', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.green,
       ),
       body: ChatScreen(
         messages: messages,

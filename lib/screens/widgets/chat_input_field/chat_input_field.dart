@@ -1,7 +1,7 @@
-import 'package:chat_package/components/chat_input_field/chat_input_field_provider.dart';
-import 'package:chat_package/components/chat_input_field/widgets/chat_bottom_sheet.dart';
-import 'package:chat_package/components/chat_input_field/widgets/recording_button.dart';
-import 'package:chat_package/components/chat_input_field/widgets/wave_animation.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/chat_input_field_provider.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/widgets/chat_bottom_sheet.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/widgets/recording_button.dart';
+import 'package:chat_package/screens/widgets/chat_input_field/widgets/wave_animation.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
